@@ -1,0 +1,130 @@
+﻿{
+    "executadoEmUtc":  "2026-11-18T18:13:28.6343144+00:00",
+    "baseUrl":  "http://localhost:5081",
+    "ambiente":  "Development",
+    "banco":  "SQLite em arquivo novo e isolado em tmp/ (ignorado pelo Git)",
+    "janelaHoras":  24,
+    "seed":  "3 pontos fictícios; 2 observações com origem DEMONSTRACAO",
+    "documentacao":  [
+                         {
+                             "status":  200,
+                             "caminho":  "/swagger/v1/swagger.json",
+                             "arquivo":  "openapi.json"
+                         },
+                         {
+                             "status":  200,
+                             "caminho":  "/swagger/index.html"
+                         }
+                     ],
+    "persistenciaAposReiniciar":  true,
+    "requisicoes":  [
+                        {
+                            "metodo":  "GET",
+                            "caminho":  "/api/pontos",
+                            "enviado":  null,
+                            "status":  200,
+                            "contentType":  "application/json; charset=utf-8",
+                            "location":  "",
+                            "arquivoResposta":  "respostas/01.json"
+                        },
+                        {
+                            "metodo":  "GET",
+                            "caminho":  "/api/pontos/3",
+                            "enviado":  null,
+                            "status":  200,
+                            "contentType":  "application/json; charset=utf-8",
+                            "location":  "",
+                            "arquivoResposta":  "respostas/02.json"
+                        },
+                        {
+                            "metodo":  "GET",
+                            "caminho":  "/api/pontos/3/observacoes?page=1\u0026pageSize=20",
+                            "enviado":  null,
+                            "status":  200,
+                            "contentType":  "application/json; charset=utf-8",
+                            "location":  "",
+                            "arquivoResposta":  "respostas/03.json"
+                        },
+                        {
+                            "metodo":  "POST",
+                            "caminho":  "/api/pontos/1/observacoes",
+                            "enviado":  {
+                                            "condicao":  "SEM_AGUA_ACUMULADA_OBSERVADA",
+                                            "observadoEm":  "2026-11-18T18:12:26.0088639+00:00"
+                                        },
+                            "status":  201,
+                            "contentType":  "application/json; charset=utf-8",
+                            "location":  "http://localhost:5081/api/pontos/1/observacoes/3",
+                            "arquivoResposta":  "respostas/04.json"
+                        },
+                        {
+                            "metodo":  "GET",
+                            "caminho":  "/api/pontos/1/observacoes/3",
+                            "enviado":  null,
+                            "status":  200,
+                            "contentType":  "application/json; charset=utf-8",
+                            "location":  "",
+                            "arquivoResposta":  "respostas/05.json"
+                        },
+                        {
+                            "metodo":  "GET",
+                            "caminho":  "/api/pontos/1/observacoes?page=1\u0026pageSize=1",
+                            "enviado":  null,
+                            "status":  200,
+                            "contentType":  "application/json; charset=utf-8",
+                            "location":  "",
+                            "arquivoResposta":  "respostas/06.json"
+                        },
+                        {
+                            "metodo":  "POST",
+                            "caminho":  "/api/pontos/1/observacoes",
+                            "enviado":  {
+                                            "condicao":  "INVALIDA",
+                                            "observadoEm":  "2026-11-18T18:12:26.0088639+00:00"
+                                        },
+                            "status":  400,
+                            "contentType":  "application/problem+json; charset=utf-8",
+                            "location":  "",
+                            "arquivoResposta":  "respostas/07.json"
+                        },
+                        {
+                            "metodo":  "POST",
+                            "caminho":  "/api/pontos/1/observacoes",
+                            "enviado":  {
+                                            "condicao":  "AGUA_ACUMULADA",
+                                            "observadoEm":  "2026-11-19T18:13:26.1280898+00:00"
+                                        },
+                            "status":  400,
+                            "contentType":  "application/problem+json",
+                            "location":  "",
+                            "arquivoResposta":  "respostas/08.json"
+                        },
+                        {
+                            "metodo":  "GET",
+                            "caminho":  "/api/pontos/999999",
+                            "enviado":  null,
+                            "status":  404,
+                            "contentType":  "application/problem+json; charset=utf-8",
+                            "location":  "",
+                            "arquivoResposta":  "respostas/09.json"
+                        },
+                        {
+                            "metodo":  "GET",
+                            "caminho":  "/api/pontos/2/observacoes/3",
+                            "enviado":  null,
+                            "status":  404,
+                            "contentType":  "application/problem+json; charset=utf-8",
+                            "location":  "",
+                            "arquivoResposta":  "respostas/10.json"
+                        },
+                        {
+                            "metodo":  "GET",
+                            "caminho":  "/api/pontos/1/observacoes/3",
+                            "enviado":  null,
+                            "status":  200,
+                            "contentType":  "application/json; charset=utf-8",
+                            "location":  "",
+                            "arquivoResposta":  "respostas/11.json"
+                        }
+                    ]
+}

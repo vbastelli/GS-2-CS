@@ -1,0 +1,521 @@
+﻿{
+  "openapi": "3.0.4",
+  "info": {
+    "title": "Água na Rua — API de C#",
+    "description": "CitizenTech no Jardim Peri. Condições relatadas, sem indicação de segurança de passagem. Pontos com demonstracao=true e origem DEMONSTRACAO são fictícios. RECENTE inclui o limite de 24h, configurável; DESATUALIZADA supera a janela; SEM_OBSERVACAO não tem relato. UTC em ISO 8601. Favoritos pertencem à persistência local do mobile.",
+    "version": "v1"
+  },
+  "paths": {
+    "/api/pontos": {
+      "get": {
+        "tags": [
+          "Pontos"
+        ],
+        "summary": "Lista pontos e a última condição relatada, com origem e estado de atualização.",
+        "description": "demonstracao=true identifica referências fictícias. Ausência de relato não indica condição de passagem.",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PontoResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/pontos/{id}": {
+      "get": {
+        "tags": [
+          "Pontos"
+        ],
+        "summary": "Consulta um ponto. Sem relatos: ultimaObservacao=null e statusAtualizacao=SEM_OBSERVACAO.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "maximum": 2147483647,
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PontoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/pontos/{id}/observacoes": {
+      "get": {
+        "tags": [
+          "Pontos"
+        ],
+        "summary": "Histórico paginado, ordenado por observadoEm, registradoEm e id decrescentes.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identificador positivo do ponto.",
+            "required": true,
+            "schema": {
+              "maximum": 2147483647,
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Página a partir de 1 (máximo 21474836).",
+            "schema": {
+              "maximum": 21474836,
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Quantidade de 1 a 100, padrão 20.",
+            "schema": {
+              "maximum": 100,
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32",
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObservacaoResponsePaginaResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Pontos"
+        ],
+        "summary": "Registra condição relatada. Origem e horário de registro são preenchidos pelo servidor.",
+        "description": "Corpo de exemplo: { \"condicao\": \"AGUA_ACUMULADA\", \"observadoEm\": \"2026-11-18T12:00:00Z\" }.\r\nEnvie um instante passado com Z ou offset. Campos adicionais são rejeitados.\r\nA origem será RELATO_CIDADAO. Não envie nomes, contatos ou texto livre.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "maximum": 2147483647,
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CriarObservacaoRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObservacaoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/pontos/{id}/observacoes/{observacaoId}": {
+      "get": {
+        "tags": [
+          "Pontos"
+        ],
+        "summary": "Consulta um relato pertencente ao ponto indicado.",
+        "operationId": "ObterObservacao",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "maximum": 2147483647,
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "observacaoId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "maximum": 2147483647,
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObservacaoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CondicaoRelatada": {
+        "enum": [
+          "SEM_AGUA_ACUMULADA_OBSERVADA",
+          "AGUA_ACUMULADA",
+          "ALAGAMENTO_RELATADO"
+        ],
+        "type": "string"
+      },
+      "CriarObservacaoRequest": {
+        "required": [
+          "condicao",
+          "observadoEm"
+        ],
+        "type": "object",
+        "properties": {
+          "condicao": {
+            "$ref": "#/components/schemas/CondicaoRelatada"
+          },
+          "observadoEm": {
+            "type": "string",
+            "description": "Instante observado em ISO 8601, com Z ou offset. Não pode estar no futuro.",
+            "format": "date-time",
+            "example": "2026-11-18T12:00:00Z"
+          }
+        },
+        "additionalProperties": false,
+        "example": {
+          "condicao": "AGUA_ACUMULADA",
+          "observadoEm": "2026-11-18T12:00:00Z"
+        }
+      },
+      "EstadoAtualizacao": {
+        "enum": [
+          "RECENTE",
+          "DESATUALIZADA",
+          "SEM_OBSERVACAO"
+        ],
+        "type": "string"
+      },
+      "ObservacaoResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pontoId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "condicao": {
+            "$ref": "#/components/schemas/CondicaoRelatada"
+          },
+          "origem": {
+            "$ref": "#/components/schemas/OrigemObservacao"
+          },
+          "observadoEm": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "registradoEm": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false,
+        "example": {
+          "id": 1,
+          "pontoId": 1,
+          "condicao": "AGUA_ACUMULADA",
+          "origem": "DEMONSTRACAO",
+          "observadoEm": "2026-11-18T12:00:00Z",
+          "registradoEm": "2026-11-18T12:30:00Z"
+        }
+      },
+      "ObservacaoResponsePaginaResponse": {
+        "type": "object",
+        "properties": {
+          "itens": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ObservacaoResponse"
+            },
+            "nullable": true
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalItens": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalPaginas": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "OrigemObservacao": {
+        "enum": [
+          "RELATO_CIDADAO",
+          "DEMONSTRACAO"
+        ],
+        "type": "string"
+      },
+      "PontoResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nome": {
+            "type": "string",
+            "nullable": true
+          },
+          "bairro": {
+            "type": "string",
+            "nullable": true
+          },
+          "latitude": {
+            "type": "number",
+            "format": "double"
+          },
+          "longitude": {
+            "type": "number",
+            "format": "double"
+          },
+          "demonstracao": {
+            "type": "boolean"
+          },
+          "statusAtualizacao": {
+            "$ref": "#/components/schemas/EstadoAtualizacao"
+          },
+          "ultimaObservacao": {
+            "$ref": "#/components/schemas/ObservacaoResponse"
+          }
+        },
+        "additionalProperties": false,
+        "example": {
+          "id": 3,
+          "nome": "Trecho C — demonstração fictícia",
+          "bairro": "Jardim Peri",
+          "latitude": -23.447,
+          "longitude": -46.659,
+          "demonstracao": true,
+          "statusAtualizacao": "SEM_OBSERVACAO",
+          "ultimaObservacao": null
+        }
+      },
+      "ProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": { }
+      },
+      "ValidationProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          },
+          "errors": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": { }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Pontos"
+    }
+  ]
+}

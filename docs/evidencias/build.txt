@@ -1,0 +1,10 @@
+﻿dotnet build AguaNaRua.sln --no-restore
+  AguaNaRua.Api -> <repositorio>\src\AguaNaRua.Api\bin\Debug\net10.0\AguaNaRua.Api.dll
+  AguaNaRua.Tests -> <repositorio>\tests\AguaNaRua.Tests\bin\Debug\net10.0\AguaNaRua.Tests.dll
+
+Compilação com êxito.
+    0 Aviso(s)
+    0 Erro(s)
+
+Tempo Decorrido 00:00:01.97
+ExitCode: 0

@@ -1,0 +1,3 @@
+﻿dotnet ef migrations has-pending-model-changes --project src/AguaNaRua.Api --no-build
+No changes have been made to the model since the last migration.
+ExitCode: 0

@@ -1,0 +1,38 @@
+﻿{
+    "verificadoEmUtc":  "2026-11-18T18:16:21.3853536+00:00",
+    "respostas":  [
+                      {
+                          "url":  "http://localhost:5080/swagger/index.html",
+                          "status":  200
+                      },
+                      {
+                          "url":  "http://localhost:5080/swagger/v1/swagger.json",
+                          "status":  200
+                      },
+                      {
+                          "url":  "http://localhost:5080/api/pontos",
+                          "status":  200
+                      },
+                      {
+                          "url":  "http://localhost:5080/api/pontos/3",
+                          "status":  200
+                      }
+                  ],
+    "estados":  [
+                    {
+                        "id":  1,
+                        "statusAtualizacao":  "RECENTE",
+                        "demonstracao":  true
+                    },
+                    {
+                        "id":  2,
+                        "statusAtualizacao":  "DESATUALIZADA",
+                        "demonstracao":  true
+                    },
+                    {
+                        "id":  3,
+                        "statusAtualizacao":  "SEM_OBSERVACAO",
+                        "demonstracao":  true
+                    }
+                ]
+}

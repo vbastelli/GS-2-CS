@@ -1,0 +1,1 @@
+{"type":"https://tools.ietf.org/html/rfc9110#section-15.5.1","title":"Dados inválidos.","status":400,"instance":"/api/pontos/1/observacoes","errors":{"observadoEm":["O horário observado não pode estar no futuro."]},"traceId":"00-c696bd7db2fc49db3f5bb3b039f6cc5a-ec2115b2e043c5d5-00"}

@@ -1,0 +1,43 @@
+@baseUrl = http://localhost:5080
+@pontoId = 1
+
+### Pontos de demonstração (banco novo: recente, desatualizada, sem observação)
+GET {{baseUrl}}/api/pontos
+Accept: application/json
+
+### Ponto com última observação
+GET {{baseUrl}}/api/pontos/{{pontoId}}
+
+### Ponto sem observação no seed inicial
+GET {{baseUrl}}/api/pontos/3
+
+### Histórico paginado
+GET {{baseUrl}}/api/pontos/{{pontoId}}/observacoes?page=1&pageSize=20
+
+### Registro com horário relativo (REST Client do VS Code)
+# @name criarObservacao
+POST {{baseUrl}}/api/pontos/{{pontoId}}/observacoes
+Content-Type: application/json
+
+{
+  "condicao": "AGUA_ACUMULADA",
+  "observadoEm": "{{$datetime iso8601 -1 m}}"
+}
+
+### Consulta pelo ID devolvido na criação
+GET {{baseUrl}}/api/pontos/{{pontoId}}/observacoes/{{criarObservacao.response.body.$.id}}
+
+### Corpo inválido: 400
+POST {{baseUrl}}/api/pontos/{{pontoId}}/observacoes
+Content-Type: application/json
+
+{
+  "condicao": "INEXISTENTE",
+  "observadoEm": "2026-11-18T12:00:00Z"
+}
+
+### Recurso inexistente: 404
+GET {{baseUrl}}/api/pontos/2147483647
+
+### OpenAPI
+GET {{baseUrl}}/swagger/v1/swagger.json

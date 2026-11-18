@@ -1,0 +1,19 @@
+name: C# - build e testes
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  verificar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+      - run: dotnet tool restore
+      - run: dotnet restore AguaNaRua.sln --locked-mode
+      - run: dotnet build AguaNaRua.sln --no-restore --configuration Release
+      - run: dotnet test AguaNaRua.sln --no-build --no-restore --configuration Release
+      - run: dotnet ef migrations has-pending-model-changes --project src/AguaNaRua.Api --configuration Release --no-build

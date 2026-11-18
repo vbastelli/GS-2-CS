@@ -1,0 +1,12 @@
+﻿dotnet list AguaNaRua.sln package --vulnerable --include-transitive
+  Determinando os projetos a serem restaurados...
+  <repositorio>\tests\AguaNaRua.Tests\AguaNaRua.Tests.csproj restaurado (em 335 ms).
+  <repositorio>\src\AguaNaRua.Api\AguaNaRua.Api.csproj restaurado (em 335 ms).
+
+As fontes a seguir foram usadas:
+   https://api.nuget.org/v3/index.json
+   C:\Program Files (x86)\Microsoft SDKs\NuGetPackages\
+
+O projeto fornecido `AguaNaRua.Api` não tem nenhum pacote vulnerável, considerando as fontes atuais.
+O projeto fornecido `AguaNaRua.Tests` não tem nenhum pacote vulnerável, considerando as fontes atuais.
+ExitCode: 0
