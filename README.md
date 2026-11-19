@@ -1,12 +1,13 @@
 # Ficha da CitizenTech — Água na Rua
 
 - **Nome:** Água na Rua.
+- **Turma:** 3ESPZ, informada pela equipe na solicitação desta revisão documental; o TXT de integrantes e o edital fornecido não especificam a turma.
 - **Cidade e bairro:** São Paulo — Jardim Peri, com seleção de ruas e pontos específicos após validação com moradores.
 - **Cidadão beneficiado:** moradores que precisarão circular por trechos sujeitos a alagamento, especialmente ao sair ou retornar do trabalho.
 - **Problema em uma frase:** quem depende de ruas sujeitas a alagamento enfrenta dificuldade para encontrar informações recentes e localizadas sobre água acumulada no seu caminho.
 - **Como funcionará:** o cidadão consultará pontos acompanhados, visualizará a última observação com horário e origem, salvará favoritos e poderá registrar uma nova ocorrência.
 - **O que cada parte fará:** o software organizará as observações; o ML investigará padrões históricos de alagamento; o circuito demonstrará monitoramento local da elevação da água; infraestrutura, segurança e testes sustentarão a proposta.
-- **Indicador de impacto:** será medido o tempo para encontrar a informação mais recente sobre um trecho. Também será avaliado se o usuário identificará corretamente sua origem, atualização e eventual ausência de informação. Essas medições ainda não foram realizadas.
+- **Indicador de impacto:** será medido o tempo para encontrar a informação mais recente sobre um trecho. Também será avaliado se o usuário identificará corretamente sua origem, atualização e eventual ausência de informação. Não foram fornecidas evidências dessas medições.
 - **ODS relacionados:** **ODS 11, meta 11.5**, pela contribuição ao acesso à informação sobre desastres relacionados à água; **ODS 13, meta 13.1**, pelo apoio à preparação e adaptação comunitária. O protótipo não comprova redução de danos ou vítimas.
 - **Link do repositório:** [github.com/vbastelli/GS-2-CS](https://github.com/vbastelli/GS-2-CS).
 
@@ -14,12 +15,12 @@ O grupo propõe um protótipo para organizar informações de aproximadamente tr
 
 Cada observação mostra local, horário, origem e condição relatada. O aplicativo distingue informação recente, informação antiga e **ausência de informação**. A falta de registros não garante passagem livre. A solução não recomenda atravessar áreas alagadas e não emite alertas operacionais.
 
-As disciplinas compartilham o problema, o cidadão e o conceito. **A Web API de C# é uma entrega independente e autocontida**, com código, banco, migrations, testes e configuração próprios. Essa decisão substitui a indicação anterior de backend compartilhado presente na [ficha original](docs/agua-na-rua.md), que foi preservada como documento de entrada.
+As disciplinas compartilham o problema, o cidadão e o conceito. **A Web API de C# é uma entrega independente e autocontida**, com código, banco, migrations, testes e configuração próprios, conforme a [Ficha da CitizenTech](docs/agua-na-rua.md). **SOA e Web Services é uma entrega separada**, com backend próprio.
 
 | Disciplina | Participação na proposta |
 |---|---|
 | SOA e Web Services | Backend próprio da disciplina, fora deste repositório de C#. |
-| C# Software Development | Esta Web API em .NET, com POO, interfaces, DI, EF Core, LINQ, async/await e testes. |
+| C# Software Development | Web API independente em .NET, com código, banco, migrations e testes próprios; POO, interfaces, DI, EF Core, LINQ e async/await. O Console é seu cliente HTTP. |
 | IA & Machine Learning | Notebook independente: KMeans + PCA para investigar recorrência e sazonalidade de ocorrências públicas e apoiar a seleção de pontos. |
 | Mobile Development & IoT | React Native, TypeScript, Expo e Expo Router; consulta e registro pela API ou mock identificado; **favoritos na persistência SQLite local do mobile**. |
 | Operating Systems | VM Linux por Shell Script, serviços, página de acompanhamento, monitoramento, logs e recuperação. Entrega própria. |
@@ -31,7 +32,7 @@ O ML pretende explorar [ocorrências de alagamento do GeoSampa](https://metadado
 
 ## Integrantes
 
-Dados de [docs/integrantes.txt](docs/integrantes.txt):
+Os quatro nomes e RMs abaixo foram conferidos com [docs/integrantes.txt](docs/integrantes.txt). A turma **3ESPZ** foi informada pela equipe nesta revisão; não consta no TXT nem no edital fornecido.
 
 | Nome | RM |
 |---|---|
@@ -279,19 +280,10 @@ O POST feito por `Invoke-RestMethod` retorna o corpo criado em `$relato`. A requ
 | Porta 5080 ocupada | Use a API que já está aberta ou encerre-a com `Ctrl+C` no terminal correspondente. Outra opção é iniciar em outra porta, como no comando abaixo. |
 | Console informa API indisponível | Confira o endereço exibido e inicie a API no primeiro terminal. Se mudou a porta, passe a mesma URL em `--api-url`. O Console continua no menu para nova operação. |
 | Banco sem dados / lista vazia | Pare a API e execute `dotnet run --project src/AguaNaRua.Api --no-launch-profile -- --seed` com a mesma conexão. Se já existem pontos, o seed não modifica o banco: use outro arquivo para uma demonstração completa. |
-| Timeout ou JSON incompatível | Confira se a URL aponta para esta Web API. O Console informa a falha e retorna ao menu; não repete automaticamente um POST. |
-
-Exemplo de API em outra porta (**PowerShell ou bash**):
-
-```sh
-dotnet run --project src/AguaNaRua.Api --launch-profile http -- --urls http://localhost:5082
-```
-
-Nesse caso, use `--api-url http://localhost:5082` no Console, `http://localhost:5082/swagger/index.html` no navegador e a mesma base nas requisições HTTP. Para desfazer uma conexão definida por variável no **PowerShell**, pare a API e execute `Remove-Item Env:ConnectionStrings__AguaNaRua` no terminal em que ela foi definida.
-| Lista sem pontos | Pare a API e execute `dotnet run --project src/AguaNaRua.Api --no-launch-profile -- --seed`, usando a mesma variável de conexão. Para uma carga nova quando já existem pontos, escolha outro arquivo de banco. |
 | Dados ficaram antigos | O seed não renova relatos existentes. Prepare outro arquivo conforme [Banco e demonstração](#banco-e-demonstração). |
 | Banco sem schema / execução sem perfil | Aplique `dotnet ef database update --project src/AguaNaRua.Api` na mesma conexão. O perfil `http` já aplica migrations em Development. |
-| URL inválida ou JSON incompatível | Use o endereço base da Web API, não o endereço do Swagger. O Console rejeita argumentos inválidos e informa quando o conteúdo recebido não segue o contrato. |
+| URL inválida, timeout ou JSON incompatível | Use o endereço base desta Web API, não o endereço do Swagger. O Console valida a URL, informa falhas de conexão ou de contrato e não repete automaticamente um POST. |
+| Build com MSB3021/MSB3027 no Windows | Um executável da configuração em compilação pode estar em uso. Encerre API/Console com `Ctrl+C` nos respectivos terminais antes de recompilar. A [auditoria documental](docs/revisao-documental.md) verificou Release sem encerrar a API que já estava usando Debug. |
 
 Exemplo de API em outra porta (**PowerShell ou bash**), no primeiro terminal:
 
@@ -299,7 +291,9 @@ Exemplo de API em outra porta (**PowerShell ou bash**), no primeiro terminal:
 dotnet run --project src/AguaNaRua.Api --launch-profile http -- --urls http://localhost:5082
 ```
 
-No segundo terminal, use o comando do Console com `--api-url http://localhost:5082`; o Swagger estará em `http://localhost:5082/swagger/index.html`. Para requisições PowerShell, altere `$base` para essa URL.
+No segundo terminal, use o comando do Console da [forma B](#b-menu-interativo-no-terminal) com `--api-url http://localhost:5082`. O Swagger estará em `http://localhost:5082/swagger/index.html`. Na [forma C](#c-requisições-http), altere `@baseUrl` do arquivo `.http` ou `$base` do exemplo PowerShell para essa URL.
+
+Para desfazer uma conexão definida por variável no **PowerShell**, pare a API e execute `Remove-Item Env:ConnectionStrings__AguaNaRua` no terminal em que ela foi definida. Isso remove a variável da sessão, sem apagar o arquivo SQLite.
 
 ## Organização e rubrica de C#
 
@@ -327,7 +321,14 @@ dotnet build AguaNaRua.sln --no-restore
 dotnet test AguaNaRua.sln --no-build --no-restore
 ```
 
-As [novas evidências do Console](docs/evidencias/console/README.md) incluem transcrições reais dos processos, entradas usadas, API com banco isolado, POST seguido de consulta, paginação, erros e API desligada. Para repetir essa verificação no **Windows PowerShell**, sem regravar os arquivos da execução anterior da API:
+Na auditoria documental de **19/11/2026**, o restore foi reconferido. O build Debug encontrou o executável da API bloqueado por um processo já em execução. Preservando esse processo, o build **Release** terminou com zero avisos e erros e os **83 testes passaram** nessa configuração, conforme o [registro da revisão](docs/revisao-documental.md). Os comandos adicionais verificados, válidos em **PowerShell ou bash**, foram:
+
+```sh
+dotnet build AguaNaRua.sln --no-restore --configuration Release
+dotnet test AguaNaRua.sln --no-build --no-restore --configuration Release --logger 'console;verbosity=minimal'
+```
+
+As [evidências da inclusão do Console](docs/evidencias/console/README.md) incluem transcrições reais dos processos, entradas usadas, API com banco isolado, POST seguido de consulta, paginação, erros e API desligada. Para repetir essa verificação no **Windows PowerShell**, sem regravar os arquivos da execução anterior da API:
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File scripts/Verificar-Console.ps1
@@ -347,15 +348,23 @@ O script executa restore/build/testes, verifica divergência do modelo, aplica a
 - [Build](docs/evidencias/build.txt), [testes](docs/evidencias/testes.txt), [restore](docs/evidencias/restore.txt), [migration em banco novo](docs/evidencias/migrations.txt), [modelo sem alterações pendentes](docs/evidencias/modelo.txt).
 - [Requisições verificadas](docs/evidencias/http.json) e [OpenAPI capturado](docs/evidencias/openapi.json).
 - [Conferência das URLs da demonstração em localhost:5080](docs/evidencias/demonstracao-local.json).
-- [Consulta de vulnerabilidades das dependências](docs/evidencias/dependencias.txt): nenhum pacote vulnerável apontado pelas fontes consultadas nesta execução.
+- [Consulta histórica de vulnerabilidades das dependências](docs/evidencias/dependencias.txt), da execução de 18/11/2026: não apontou pacotes vulneráveis nas fontes consultadas naquela execução.
 - Captura gráfica indisponível: a ferramenta de controle do computador bloqueou o Firefox por falta de suporte à política de URLs nesse navegador no Windows. Swagger UI verificado por HTTP 200; as evidências são respostas reais, sem screenshot.
 - [Workflow de CI](.github/workflows/dotnet.yml) configurado para GitHub Actions em pushes e pull requests. Consulte as execuções na [aba Actions](https://github.com/vbastelli/GS-2-CS/actions).
 
-## Pendências externas e envio
+## Estado da entrega e pendências
 
-- Repositório da entrega: [vbastelli/GS-2-CS](https://github.com/vbastelli/GS-2-CS). O link acima deve ser usado no envio acadêmico.
-- Validar os pontos piloto e a necessidade atual com moradores. Os pontos desta API continuam sendo demonstração até essa validação; não há resultados de campo ou impacto medido.
-- Confirmar o contrato de consumo com o mobile. O contrato entregue está no Swagger; favoritos permanecem locais no aplicativo.
-- Conferir eventuais complementos da turma/professor que não estavam nos arquivos fornecidos.
+| Item | Situação documentada |
+|---|---|
+| Implementação técnica de C# | Web API, Console HTTP, EF Core/SQLite, migrations e testes próprios presentes na solution. Execuções comprovadas nas evidências acima. |
+| Build e testes | 49 testes na etapa inicial de 18/11/2026; 83 após inclusão do Console em 19/11/2026, com build sem avisos ou erros. As duas etapas possuem registros separados. |
+| Repositório GitHub | [vbastelli/GS-2-CS](https://github.com/vbastelli/GS-2-CS) reúne a implementação e a documentação da entrega. A publicação no GitHub e o envio acadêmico são etapas distintas; o recebimento no Teams/Portal deve ser confirmado pelo integrante responsável. |
+| Pesquisa com moradores e pontos piloto | Pendente: não foram fornecidos registros de entrevistas, validação da necessidade atual ou pontos reais verificados. Os três pontos da API continuam fictícios. |
+| Indicadores de impacto | Pendente: não foram fornecidas medições de tempo de consulta, compreensão da informação ou impacto em campo. |
+| Contrato com o mobile | Pendente de confirmação pela equipe; o contrato desta API está no Swagger. Favoritos pertencem à persistência local do mobile. |
+| Complementos da turma/professor | Devem ser conferidos pela equipe; não foram fornecidos além dos documentos existentes. |
+| Envio no Teams/Portal do Aluno | Sem confirmação ou comprovante fornecido. O integrante responsável deve enviar o link do GitHub e conferir o recebimento na tarefa da disciplina. |
+
+O [registro desta auditoria documental](docs/revisao-documental.md) relaciona as verificações e suas fontes.
 
 Conforme a página 30 e as regras gerais do [edital fornecido](docs/GS%20CitizenTech%20-%203ES%20Fev%20-%20FIAP%202026.pdf), C# é enviado como **link do GitHub**, por **um integrante** no Teams ou Portal do Aluno, até **19/11/2026 às 23h55**, conforme orientação da turma. Não há vídeo específico de C# entre os entregáveis da página 30. O envio acadêmico fica a cargo do integrante responsável.

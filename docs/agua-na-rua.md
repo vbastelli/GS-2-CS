@@ -1,14 +1,15 @@
 # Ficha da CitizenTech — Água na Rua
 
 - **Nome:** Água na Rua.
+- **Turma:** 3ESPZ, informada pela equipe na solicitação desta revisão documental; o TXT de integrantes e o edital fornecido não especificam a turma.
 - **Cidade e bairro:** São Paulo — Jardim Peri, com seleção de ruas e pontos específicos após validação com moradores.
 - **Cidadão beneficiado:** moradores que precisarão circular por trechos sujeitos a alagamento, especialmente ao sair ou retornar do trabalho.
 - **Problema em uma frase:** quem depende de ruas sujeitas a alagamento enfrenta dificuldade para encontrar informações recentes e localizadas sobre água acumulada no seu caminho.
 - **Como funcionará:** o cidadão consultará pontos acompanhados, visualizará a última observação com horário e origem, salvará favoritos e poderá registrar uma nova ocorrência.
 - **O que cada parte fará:** o software organizará as observações; o ML investigará padrões históricos de alagamento; o circuito demonstrará monitoramento local da elevação da água; infraestrutura, segurança e testes sustentarão a proposta.
-- **Indicador de impacto:** será medido o tempo para encontrar a informação mais recente sobre um trecho. Também será avaliado se o usuário identificará corretamente sua origem, atualização e eventual ausência de informação.
+- **Indicador de impacto:** será medido o tempo para encontrar a informação mais recente sobre um trecho. Também será avaliado se o usuário identificará corretamente sua origem, atualização e eventual ausência de informação. Não foram fornecidas evidências dessas medições.
 - **ODS relacionados:** **ODS 11, meta 11.5**, pela contribuição ao acesso à informação sobre desastres relacionados à água; **ODS 13, meta 13.1**, pelo apoio à preparação e adaptação comunitária. O protótipo não comprovará redução de danos ou vítimas.
-- **Link do repositório:** `[INSERIR LINK]`.
+- **Link do repositório:** [github.com/vbastelli/GS-2-CS](https://github.com/vbastelli/GS-2-CS).
 
 ## Proposta
 
@@ -20,12 +21,14 @@ Cada observação mostrará local, horário, origem e condição relatada. O apl
 
 As disciplinas compartilharão o mesmo problema, cidadão e conceito. Os componentes poderão funcionar separadamente, mantendo as conexões descritas abaixo.
 
+**C# Software Development possui uma Web API independente**, com código, banco, migrations, testes e configuração próprios. **SOA e Web Services é uma entrega separada**. A API de C# não reutiliza nem integra o backend de SOA.
+
 ## Participação das oito disciplinas
 
 | Disciplina | O que o grupo construirá ou demonstrará |
 |---|---|
-| **SOA e Web Services** | Desenvolverá uma API para consultar pontos e registrar observações, com domínio organizado, banco, migrações, documentação dos endpoints e testes automatizados. |
-| **C# Software Development** | Utilizará o mesmo backend de SOA em C#/.NET, demonstrando POO, interfaces, injeção de dependência, Web API, EF Core, LINQ, operações assíncronas e testes unitários. |
+| **SOA e Web Services** | Desenvolverá uma API para consultar pontos e registrar observações em uma entrega separada de C#, com domínio organizado, banco, migrações, documentação dos endpoints e testes próprios. |
+| **C# Software Development** | Entrega uma Web API independente em C#/.NET, com código, banco, migrations, testes e configuração próprios, demonstrando POO, interfaces, injeção de dependência, EF Core, LINQ, operações assíncronas e testes unitários. O Console consome essa API por HTTP. |
 | **IA & Machine Learning** | Investigará padrões de recorrência e sazonalidade das ocorrências públicas de alagamento. Utilizará KMeans + PCA para explorar agrupamentos de áreas e apoiar a escolha de pontos para monitoramento. O notebook será independente do aplicativo. |
 | **Mobile Development & IoT** | Desenvolverá um app com React Native, TypeScript, Expo e Expo Router para consultar pontos, visualizar observações, salvar favoritos e registrar ocorrências. Consumirá API ou mock identificado e utilizará SQLite para persistência local. |
 | **Operating Systems** | Provisionará uma VM Linux por Shell Script para executar a API e uma página web de acompanhamento. Demonstrará serviços, monitoramento, logs e recuperação após falha. |
@@ -43,8 +46,10 @@ Serão avaliadas pelo menos dez combinações de três hiperparâmetros, com val
 
 ## Limites da demonstração
 
-- **Dados reais:** histórico público utilizado no ML e informações territoriais que forem verificadas.
+- **Dados reais previstos:** histórico público para o ML e informações territoriais que forem verificadas nas entregas correspondentes.
 - **Dados de demonstração:** leituras do Wokwi, mocks e relatos fictícios para testes, sempre identificados.
 - **Evoluções futuras:** sensores instalados, transmissão automática, notificações e integração entre dispositivo e aplicativo.
 
-**Nota à equipe:** esta Ficha deverá permanecer igual nos READMEs das disciplinas. Os prompts utilizados serão registrados em `prompts.md`.
+No protótipo de C# disponível neste repositório, os três pontos e suas coordenadas são fictícios e identificados como demonstração; os relatos do seed têm origem `DEMONSTRACAO`. Não foram fornecidos registros de conversas com moradores, pontos reais validados ou medições de impacto. Essas etapas permanecem pendentes. Os [resultados de build e testes](evidencias/console/README.md) comprovam a execução técnica do protótipo, sem comprovar validação de campo.
+
+**Nota à equipe:** esta Ficha é a referência comum para os READMEs das disciplinas, respeitando a separação das entregas de C# e SOA.
