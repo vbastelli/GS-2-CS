@@ -1,0 +1,15 @@
+dotnet run --project src/AguaNaRua.Console --no-build -- --api-url http://localhost:5082
+API: http://localhost:5082/
+Horários exibidos em UTC. Os estados de atualização são informados pela API.
+RECENTE: dentro da janela configurada; DESATUALIZADA: fora da janela; SEM_OBSERVACAO: ausência de informação.
+Condições relatadas não indicam segurança de passagem. Pontos e relatos fictícios são identificados.
+
+Água na Rua
+1. Listar pontos monitorados
+2. Consultar detalhes de um ponto
+3. Consultar histórico de observações
+4. Registrar uma observação
+0. Sair
+Escolha uma opção: ID do ponto: Entrada encerrada. Até logo!
+
+ExitCode: 0

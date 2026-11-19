@@ -1,0 +1,67 @@
+dotnet run --project src/AguaNaRua.Console -- --api-url http://localhost:5082
+Entrada interativa enviada ao terminal: 1, 2, 3, 0 (cada valor seguido de Enter).
+
+API: http://localhost:5082/
+Horários exibidos em UTC. Os estados de atualização são informados pela API.
+RECENTE: dentro da janela configurada; DESATUALIZADA: fora da janela; SEM_OBSERV
+ACAO: ausência de informação.
+Condições relatadas não indicam segurança de passagem. Pontos e relatos fictício
+s são identificados.
+
+Água na Rua
+1. Listar pontos monitorados
+2. Consultar detalhes de um ponto
+3. Consultar histórico de observações
+4. Registrar uma observação
+0. Sair
+Escolha uma opção:1
+
+ID: 1 | Trecho A — demonstração fictícia | Bairro: Jardim Peri
+Demonstração: SIM — referência fictícia, não validada em campo
+Estado de atualização: RECENTE
+Última observação:
+Observação ID: 1 | Ponto: 1 | Condição: Água acumulada (AGUA_ACUMULADA)
+Observado em: 2026-11-19T13:56:54.4184408Z (UTC)
+Registrado em: 2026-11-19T14:26:54.4184408Z (UTC)
+Origem: DEMONSTRACAO — relato fictício de demonstração
+
+ID: 2 | Trecho B — demonstração fictícia | Bairro: Jardim Peri
+Demonstração: SIM — referência fictícia, não validada em campo
+Estado de atualização: DESATUALIZADA
+Última observação:
+Observação ID: 2 | Ponto: 2 | Condição: Alagamento relatado (ALAGAMENTO_RELATADO
+)
+Observado em: 2026-11-17T14:26:54.4184408Z (UTC)
+Registrado em: 2026-11-19T14:26:54.4184408Z (UTC)
+Origem: DEMONSTRACAO — relato fictício de demonstração
+
+ID: 3 | Trecho C — demonstração fictícia | Bairro: Jardim Peri
+Demonstração: SIM — referência fictícia, não validada em campo
+Estado de atualização: SEM_OBSERVACAO
+SEM_OBSERVACAO — nenhum relato disponível; ausência de informação.
+
+Água na Rua
+1. Listar pontos monitorados
+2. Consultar detalhes de um ponto
+3. Consultar histórico de observações
+4. Registrar uma observação
+0. Sair
+Escolha uma opção: 2
+ID do ponto: 3
+
+ID: 3 | Trecho C — demonstração fictícia | Bairro: Jardim Peri
+Demonstração: SIM — referência fictícia, não validada em campo
+Estado de atualização: SEM_OBSERVACAO
+Coordenadas: latitude -23.447, longitude -46.659
+SEM_OBSERVACAO — nenhum relato disponível; ausência de informação.
+
+Água na Rua
+1. Listar pontos monitorados
+2. Consultar detalhes de um ponto
+3. Consultar histórico de observações
+4. Registrar uma observação
+0. Sair
+Escolha uma opção: 0
+Até logo!
+
+ExitCode: 0

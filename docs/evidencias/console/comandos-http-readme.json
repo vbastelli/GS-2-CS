@@ -1,0 +1,26 @@
+{
+  "apiUrl": "http://localhost:5082",
+  "corpoEnviado": {
+    "observadoEm": "2026-11-19T11:28:14.0726509-03:00",
+    "condicao": "AGUA_ACUMULADA"
+  },
+  "relatoConsultado": {
+    "id": 3,
+    "pontoId": 1,
+    "condicao": "AGUA_ACUMULADA",
+    "origem": "RELATO_CIDADAO",
+    "observadoEm": "2026-11-19T14:28:14.0726509Z",
+    "registradoEm": "2026-11-19T14:29:14.1378385Z"
+  },
+  "totalHistorico": 2,
+  "consultas": [
+    {
+      "id": null,
+      "statusAtualizacao": null
+    },
+    {
+      "id": 3,
+      "statusAtualizacao": "SEM_OBSERVACAO"
+    }
+  ]
+}

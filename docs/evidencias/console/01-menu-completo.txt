@@ -1,0 +1,189 @@
+dotnet run --project src/AguaNaRua.Console --no-build -- --api-url http://localhost:5082
+API: http://localhost:5082/
+Horários exibidos em UTC. Os estados de atualização são informados pela API.
+RECENTE: dentro da janela configurada; DESATUALIZADA: fora da janela; SEM_OBSERVACAO: ausência de informação.
+Condições relatadas não indicam segurança de passagem. Pontos e relatos fictícios são identificados.
+
+Água na Rua
+1. Listar pontos monitorados
+2. Consultar detalhes de um ponto
+3. Consultar histórico de observações
+4. Registrar uma observação
+0. Sair
+Escolha uma opção:
+ID: 1 | Trecho A — demonstração fictícia | Bairro: Jardim Peri
+Demonstração: SIM — referência fictícia, não validada em campo
+Estado de atualização: RECENTE
+Última observação:
+Observação ID: 1 | Ponto: 1 | Condição: Água acumulada (AGUA_ACUMULADA)
+Observado em: 2026-11-19T13:55:45.9744840Z (UTC)
+Registrado em: 2026-11-19T14:25:45.9744840Z (UTC)
+Origem: DEMONSTRACAO — relato fictício de demonstração
+
+ID: 2 | Trecho B — demonstração fictícia | Bairro: Jardim Peri
+Demonstração: SIM — referência fictícia, não validada em campo
+Estado de atualização: DESATUALIZADA
+Última observação:
+Observação ID: 2 | Ponto: 2 | Condição: Alagamento relatado (ALAGAMENTO_RELATADO)
+Observado em: 2026-11-17T14:25:45.9744840Z (UTC)
+Registrado em: 2026-11-19T14:25:45.9744840Z (UTC)
+Origem: DEMONSTRACAO — relato fictício de demonstração
+
+ID: 3 | Trecho C — demonstração fictícia | Bairro: Jardim Peri
+Demonstração: SIM — referência fictícia, não validada em campo
+Estado de atualização: SEM_OBSERVACAO
+SEM_OBSERVACAO — nenhum relato disponível; ausência de informação.
+
+Água na Rua
+1. Listar pontos monitorados
+2. Consultar detalhes de um ponto
+3. Consultar histórico de observações
+4. Registrar uma observação
+0. Sair
+Escolha uma opção: ID do ponto:
+ID: 1 | Trecho A — demonstração fictícia | Bairro: Jardim Peri
+Demonstração: SIM — referência fictícia, não validada em campo
+Estado de atualização: RECENTE
+Coordenadas: latitude -23.445, longitude -46.657
+Última observação:
+Observação ID: 1 | Ponto: 1 | Condição: Água acumulada (AGUA_ACUMULADA)
+Observado em: 2026-11-19T13:55:45.9744840Z (UTC)
+Registrado em: 2026-11-19T14:25:45.9744840Z (UTC)
+Origem: DEMONSTRACAO — relato fictício de demonstração
+
+Água na Rua
+1. Listar pontos monitorados
+2. Consultar detalhes de um ponto
+3. Consultar histórico de observações
+4. Registrar uma observação
+0. Sair
+Escolha uma opção: ID do ponto:
+ID: 3 | Trecho C — demonstração fictícia | Bairro: Jardim Peri
+Demonstração: SIM — referência fictícia, não validada em campo
+Estado de atualização: SEM_OBSERVACAO
+Coordenadas: latitude -23.447, longitude -46.659
+SEM_OBSERVACAO — nenhum relato disponível; ausência de informação.
+
+Água na Rua
+1. Listar pontos monitorados
+2. Consultar detalhes de um ponto
+3. Consultar histórico de observações
+4. Registrar uma observação
+0. Sair
+Escolha uma opção: ID do ponto: Histórico do ponto 3:
+Sem observações: ausência de informação sobre este ponto.
+
+Água na Rua
+1. Listar pontos monitorados
+2. Consultar detalhes de um ponto
+3. Consultar histórico de observações
+4. Registrar uma observação
+0. Sair
+Escolha uma opção: ID do ponto: Histórico do ponto 1 — página 1 de 1, 1 observações.
+Observação ID: 1 | Ponto: 1 | Condição: Água acumulada (AGUA_ACUMULADA)
+Observado em: 2026-11-19T13:55:45.9744840Z (UTC)
+Registrado em: 2026-11-19T14:25:45.9744840Z (UTC)
+Origem: DEMONSTRACAO — relato fictício de demonstração
+N: próxima página | A: anterior | 0: voltar ao menu:
+Água na Rua
+1. Listar pontos monitorados
+2. Consultar detalhes de um ponto
+3. Consultar histórico de observações
+4. Registrar uma observação
+0. Sair
+Escolha uma opção: ID do ponto: Condição relatada:
+1. Sem água acumulada observada
+2. Água acumulada
+3. Alagamento relatado
+Escolha a condição (1 a 3): Horário: 1. Agora (UTC) | 2. Digitar ISO 8601: Observação registrada com sucesso (HTTP 201).
+Observação ID: 3 | Ponto: 1 | Condição: Água acumulada (AGUA_ACUMULADA)
+Observado em: 2026-11-19T14:25:48.1744688Z (UTC)
+Registrado em: 2026-11-19T14:25:48.2186739Z (UTC)
+Origem: RELATO_CIDADAO
+
+Água na Rua
+1. Listar pontos monitorados
+2. Consultar detalhes de um ponto
+3. Consultar histórico de observações
+4. Registrar uma observação
+0. Sair
+Escolha uma opção: ID do ponto:
+ID: 1 | Trecho A — demonstração fictícia | Bairro: Jardim Peri
+Demonstração: SIM — referência fictícia, não validada em campo
+Estado de atualização: RECENTE
+Coordenadas: latitude -23.445, longitude -46.657
+Última observação:
+Observação ID: 3 | Ponto: 1 | Condição: Água acumulada (AGUA_ACUMULADA)
+Observado em: 2026-11-19T14:25:48.1744688Z (UTC)
+Registrado em: 2026-11-19T14:25:48.2186739Z (UTC)
+Origem: RELATO_CIDADAO
+
+Água na Rua
+1. Listar pontos monitorados
+2. Consultar detalhes de um ponto
+3. Consultar histórico de observações
+4. Registrar uma observação
+0. Sair
+Escolha uma opção: ID do ponto: Histórico do ponto 1 — página 1 de 1, 2 observações.
+Observação ID: 3 | Ponto: 1 | Condição: Água acumulada (AGUA_ACUMULADA)
+Observado em: 2026-11-19T14:25:48.1744688Z (UTC)
+Registrado em: 2026-11-19T14:25:48.2186739Z (UTC)
+Origem: RELATO_CIDADAO
+Observação ID: 1 | Ponto: 1 | Condição: Água acumulada (AGUA_ACUMULADA)
+Observado em: 2026-11-19T13:55:45.9744840Z (UTC)
+Registrado em: 2026-11-19T14:25:45.9744840Z (UTC)
+Origem: DEMONSTRACAO — relato fictício de demonstração
+N: próxima página | A: anterior | 0: voltar ao menu:
+Água na Rua
+1. Listar pontos monitorados
+2. Consultar detalhes de um ponto
+3. Consultar histórico de observações
+4. Registrar uma observação
+0. Sair
+Escolha uma opção: Opção inválida. Escolha 1, 2, 3, 4 ou 0.
+
+Água na Rua
+1. Listar pontos monitorados
+2. Consultar detalhes de um ponto
+3. Consultar histórico de observações
+4. Registrar uma observação
+0. Sair
+Escolha uma opção: Opção inválida. Escolha 1, 2, 3, 4 ou 0.
+
+Água na Rua
+1. Listar pontos monitorados
+2. Consultar detalhes de um ponto
+3. Consultar histórico de observações
+4. Registrar uma observação
+0. Sair
+Escolha uma opção: ID do ponto: ID inválido. Informe um número inteiro positivo.
+ID do ponto: ID inválido. Informe um número inteiro positivo.
+ID do ponto: HTTP 404 — Ponto ou observação não encontrado.
+Recurso não encontrado.
+O ponto ou a observação não foi encontrado neste caminho.
+
+Água na Rua
+1. Listar pontos monitorados
+2. Consultar detalhes de um ponto
+3. Consultar histórico de observações
+4. Registrar uma observação
+0. Sair
+Escolha uma opção: ID do ponto: Condição relatada:
+1. Sem água acumulada observada
+2. Água acumulada
+3. Alagamento relatado
+Escolha a condição (1 a 3): Condição inválida. Escolha 1, 2 ou 3.
+Escolha a condição (1 a 3): Horário: 1. Agora (UTC) | 2. Digitar ISO 8601: Opção de horário inválida. Escolha 1 ou 2.
+Horário: 1. Agora (UTC) | 2. Digitar ISO 8601: Horário observado (ISO 8601 com Z ou offset, incluindo segundos): HTTP 400 — Dados recusados pela API.
+Dados inválidos.
+observadoEm: O horário observado não pode estar no futuro.
+
+Água na Rua
+1. Listar pontos monitorados
+2. Consultar detalhes de um ponto
+3. Consultar histórico de observações
+4. Registrar uma observação
+0. Sair
+Escolha uma opção: Até logo!
+
+ExitCode: 0

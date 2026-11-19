@@ -1,0 +1,5 @@
+dotnet run --project src/AguaNaRua.Console --no-build -- --api-url ftp://localhost
+A URL da API deve ser absoluta, HTTP ou HTTPS, sem credenciais, query ou fragmento.
+Uso: dotnet run --project src/AguaNaRua.Console -- --api-url http://localhost:5080
+
+ExitCode: 2

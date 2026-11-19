@@ -1,0 +1,6 @@
+dotnet run --project src/AguaNaRua.Console --no-build -- --help
+Água na Rua — cliente HTTP da Web API.
+Uso: dotnet run --project src/AguaNaRua.Console -- [--api-url http://localhost:5080]
+Timeout HTTP: 10 segundos. Opção 0 ou Ctrl+C para sair.
+
+ExitCode: 0

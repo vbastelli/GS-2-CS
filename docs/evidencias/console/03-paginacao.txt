@@ -1,0 +1,75 @@
+dotnet run --project src/AguaNaRua.Console --no-build -- --api-url http://localhost:5082
+API: http://localhost:5082/
+Horários exibidos em UTC. Os estados de atualização são informados pela API.
+RECENTE: dentro da janela configurada; DESATUALIZADA: fora da janela; SEM_OBSERVACAO: ausência de informação.
+Condições relatadas não indicam segurança de passagem. Pontos e relatos fictícios são identificados.
+
+Água na Rua
+1. Listar pontos monitorados
+2. Consultar detalhes de um ponto
+3. Consultar histórico de observações
+4. Registrar uma observação
+0. Sair
+Escolha uma opção: ID do ponto: Histórico do ponto 1 — página 1 de 2, 6 observações.
+Observação ID: 3 | Ponto: 1 | Condição: Água acumulada (AGUA_ACUMULADA)
+Observado em: 2026-11-19T14:25:48.1744688Z (UTC)
+Registrado em: 2026-11-19T14:25:48.2186739Z (UTC)
+Origem: RELATO_CIDADAO
+Observação ID: 4 | Ponto: 1 | Condição: Sem água acumulada observada (SEM_AGUA_ACUMULADA_OBSERVADA)
+Observado em: 2026-11-19T14:24:48.3395630Z (UTC)
+Registrado em: 2026-11-19T14:25:49.3476033Z (UTC)
+Origem: RELATO_CIDADAO
+Observação ID: 5 | Ponto: 1 | Condição: Água acumulada (AGUA_ACUMULADA)
+Observado em: 2026-11-19T14:23:49.4870541Z (UTC)
+Registrado em: 2026-11-19T14:25:49.5150697Z (UTC)
+Origem: RELATO_CIDADAO
+Observação ID: 6 | Ponto: 1 | Condição: Água acumulada (AGUA_ACUMULADA)
+Observado em: 2026-11-19T14:22:49.5170522Z (UTC)
+Registrado em: 2026-11-19T14:25:49.5183090Z (UTC)
+Origem: RELATO_CIDADAO
+Observação ID: 7 | Ponto: 1 | Condição: Água acumulada (AGUA_ACUMULADA)
+Observado em: 2026-11-19T14:21:49.5200533Z (UTC)
+Registrado em: 2026-11-19T14:25:49.5212907Z (UTC)
+Origem: RELATO_CIDADAO
+N: próxima página | A: anterior | 0: voltar ao menu: Histórico do ponto 1 — página 2 de 2, 6 observações.
+Observação ID: 1 | Ponto: 1 | Condição: Água acumulada (AGUA_ACUMULADA)
+Observado em: 2026-11-19T13:55:45.9744840Z (UTC)
+Registrado em: 2026-11-19T14:25:45.9744840Z (UTC)
+Origem: DEMONSTRACAO — relato fictício de demonstração
+N: próxima página | A: anterior | 0: voltar ao menu: Histórico do ponto 1 — página 1 de 2, 6 observações.
+Observação ID: 3 | Ponto: 1 | Condição: Água acumulada (AGUA_ACUMULADA)
+Observado em: 2026-11-19T14:25:48.1744688Z (UTC)
+Registrado em: 2026-11-19T14:25:48.2186739Z (UTC)
+Origem: RELATO_CIDADAO
+Observação ID: 4 | Ponto: 1 | Condição: Sem água acumulada observada (SEM_AGUA_ACUMULADA_OBSERVADA)
+Observado em: 2026-11-19T14:24:48.3395630Z (UTC)
+Registrado em: 2026-11-19T14:25:49.3476033Z (UTC)
+Origem: RELATO_CIDADAO
+Observação ID: 5 | Ponto: 1 | Condição: Água acumulada (AGUA_ACUMULADA)
+Observado em: 2026-11-19T14:23:49.4870541Z (UTC)
+Registrado em: 2026-11-19T14:25:49.5150697Z (UTC)
+Origem: RELATO_CIDADAO
+Observação ID: 6 | Ponto: 1 | Condição: Água acumulada (AGUA_ACUMULADA)
+Observado em: 2026-11-19T14:22:49.5170522Z (UTC)
+Registrado em: 2026-11-19T14:25:49.5183090Z (UTC)
+Origem: RELATO_CIDADAO
+Observação ID: 7 | Ponto: 1 | Condição: Água acumulada (AGUA_ACUMULADA)
+Observado em: 2026-11-19T14:21:49.5200533Z (UTC)
+Registrado em: 2026-11-19T14:25:49.5212907Z (UTC)
+Origem: RELATO_CIDADAO
+N: próxima página | A: anterior | 0: voltar ao menu: Histórico do ponto 1 — página 2 de 2, 6 observações.
+Observação ID: 1 | Ponto: 1 | Condição: Água acumulada (AGUA_ACUMULADA)
+Observado em: 2026-11-19T13:55:45.9744840Z (UTC)
+Registrado em: 2026-11-19T14:25:45.9744840Z (UTC)
+Origem: DEMONSTRACAO — relato fictício de demonstração
+N: próxima página | A: anterior | 0: voltar ao menu: Navegação inválida ou página indisponível.
+N: próxima página | A: anterior | 0: voltar ao menu:
+Água na Rua
+1. Listar pontos monitorados
+2. Consultar detalhes de um ponto
+3. Consultar histórico de observações
+4. Registrar uma observação
+0. Sair
+Escolha uma opção: Até logo!
+
+ExitCode: 0

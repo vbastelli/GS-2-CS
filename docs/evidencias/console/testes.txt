@@ -1,0 +1,6 @@
+dotnet test AguaNaRua.sln --no-build --no-restore --logger console;verbosity=minimal
+Execução de teste para <repositorio>\tests\AguaNaRua.Tests\bin\Debug\net10.0\AguaNaRua.Tests.dll (.NETCoreApp,Version=v10.0)
+1 arquivos de teste no total corresponderam ao padrão especificado.
+
+Aprovado!  – Com falha:     0, Aprovado:    83, Ignorado:     0, Total:    83, Duração: 3 s - AguaNaRua.Tests.dll (net10.0)
+ExitCode: 0

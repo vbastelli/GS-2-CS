@@ -1,0 +1,5 @@
+dotnet tool restore
+A ferramenta 'dotnet-ef' (versão '10.0.4') foi restaurada. Comandos disponíveis: dotnet-ef
+
+A restauração foi bem-sucedida.
+ExitCode: 0

@@ -1,0 +1,5 @@
+dotnet restore AguaNaRua.sln --locked-mode
+  Determinando os projetos a serem restaurados...
+  <repositorio>\src\AguaNaRua.Console\AguaNaRua.Console.csproj restaurado (em 107 ms).
+  2 de 3 projetos estão atualizados para restauração.
+ExitCode: 0

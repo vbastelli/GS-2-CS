@@ -1,0 +1,102 @@
+{
+    "executadoEmUtc":  "2026-11-19T14:25:58.7548220+00:00",
+    "sdk":  "10.0.200",
+    "apiUrl":  "http://localhost:5082",
+    "banco":  "SQLite novo e isolado em tmp/ (ignorado pelo Git)",
+    "demonstracao":  "Três pontos fictícios; seed DEMONSTRACAO; novos relatos enviados pelo endpoint público RELATO_CIDADAO",
+    "swaggerStatus":  200,
+    "openapiStatus":  200,
+    "persistenciaConferida":  true,
+    "cenarios":  [
+                     {
+                         "cenario":  "01-menu-completo",
+                         "exitCode":  0,
+                         "verificacoes":  [
+                                              "ID: 1",
+                                              "ID: 2",
+                                              "ID: 3",
+                                              "RECENTE",
+                                              "DESATUALIZADA",
+                                              "SEM_OBSERVACAO",
+                                              "Coordenadas:",
+                                              "Sem observações: ausência de informação",
+                                              "HTTP 201",
+                                              "RELATO_CIDADAO",
+                                              "Opção inválida",
+                                              "ID inválido",
+                                              "HTTP 404",
+                                              "Condição inválida",
+                                              "Opção de horário inválida",
+                                              "HTTP 400",
+                                              "O horário observado não pode estar no futuro.",
+                                              "Até logo!"
+                                          ],
+                         "saida":  "01-menu-completo.txt",
+                         "entrada":  "01-menu-completo.entrada.txt"
+                     },
+                     {
+                         "cenario":  "02-horario-com-offset",
+                         "exitCode":  0,
+                         "verificacoes":  [
+                                              "Horário inválido",
+                                              "HTTP 201",
+                                              "SEM_AGUA_ACUMULADA_OBSERVADA",
+                                              "(UTC)",
+                                              "Histórico do ponto 1",
+                                              "Até logo!"
+                                          ],
+                         "saida":  "02-horario-com-offset.txt",
+                         "entrada":  "02-horario-com-offset.entrada.txt"
+                     },
+                     {
+                         "cenario":  "03-paginacao",
+                         "exitCode":  0,
+                         "verificacoes":  [
+                                              "página 1 de 2",
+                                              "página 2 de 2",
+                                              "Navegação inválida",
+                                              "Até logo!"
+                                          ],
+                         "saida":  "03-paginacao.txt",
+                         "entrada":  "03-paginacao.entrada.txt"
+                     },
+                     {
+                         "cenario":  "04-fim-da-entrada",
+                         "exitCode":  0,
+                         "verificacoes":  [
+                                              "Entrada encerrada"
+                                          ],
+                         "saida":  "04-fim-da-entrada.txt",
+                         "entrada":  "04-fim-da-entrada.entrada.txt"
+                     },
+                     {
+                         "cenario":  "05-url-invalida",
+                         "exitCode":  2,
+                         "verificacoes":  [
+                                              "A URL da API deve ser absoluta"
+                                          ],
+                         "saida":  "05-url-invalida.txt",
+                         "entrada":  "05-url-invalida.entrada.txt"
+                     },
+                     {
+                         "cenario":  "06-ajuda",
+                         "exitCode":  0,
+                         "verificacoes":  [
+                                              "Timeout HTTP: 10 segundos"
+                                          ],
+                         "saida":  "06-ajuda.txt",
+                         "entrada":  "06-ajuda.entrada.txt"
+                     },
+                     {
+                         "cenario":  "07-api-desligada",
+                         "exitCode":  0,
+                         "verificacoes":  [
+                                              "Não foi possível acessar a API em http://localhost:5082",
+                                              "dotnet run --project src/AguaNaRua.Api --launch-profile http",
+                                              "Até logo!"
+                                          ],
+                         "saida":  "07-api-desligada.txt",
+                         "entrada":  "07-api-desligada.entrada.txt"
+                     }
+                 ]
+}

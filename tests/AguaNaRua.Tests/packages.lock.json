@@ -569,6 +569,9 @@
           "SQLitePCLRaw.bundle_e_sqlite3": "[2.1.14, )",
           "Swashbuckle.AspNetCore": "[10.0.1, )"
         }
+      },
+      "aguanarua.console": {
+        "type": "Project"
       }
     }
   }

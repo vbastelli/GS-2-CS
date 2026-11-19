@@ -44,6 +44,8 @@ Dados de [docs/integrantes.txt](docs/integrantes.txt):
 
 ASP.NET Core Web API com Controllers, dois modelos centrais (`PontoMonitorado` e `Observacao`) e DTOs HTTP separados. Não importa nem integra código, banco, projetos ou endpoints de SOA. Funciona sem ML, mobile, Wokwi, VM ou serviços externos.
 
+O projeto [AguaNaRua.Console](src/AguaNaRua.Console/) oferece um menu em português para demonstrar a API pelo terminal. É um cliente HTTP independente: regras de negócio, validações dos relatos, EF Core e persistência continuam na API. Veja as [três formas de reprodução para o professor](#formas-de-reprodução-para-o-professor).
+
 O seed contém **três referências e coordenadas fictícias para demonstração**, identificadas com `demonstracao: true`. Não representam pontos piloto validados nem dados oficiais. Os dois relatos de exemplo têm `origem: DEMONSTRACAO`. Relatos recebidos pelo endpoint público têm `origem: RELATO_CIDADAO`, inclusive quando associados a um ponto demonstrativo. Não há nomes, contatos ou campo de texto livre nos relatos.
 
 ## Pré-requisitos e versões
@@ -86,7 +88,8 @@ O seed é transacional e idempotente: se já existe qualquer ponto, não altera 
 Para uma demonstração nova sem remover o banco existente, aponte para **outro arquivo**. Exemplo PowerShell, com caminho relativo à pasta da API:
 
 ```powershell
-$env:ConnectionStrings__AguaNaRua = 'Data Source=outra-demonstracao.db;Foreign Keys=True'
+$arquivoBanco = 'demonstracao-' + [Guid]::NewGuid().ToString('N') + '.db'
+$env:ConnectionStrings__AguaNaRua = "Data Source=$arquivoBanco;Foreign Keys=True"
 dotnet ef database update --project src/AguaNaRua.Api
 dotnet run --project src/AguaNaRua.Api --no-launch-profile -- --seed
 dotnet run --project src/AguaNaRua.Api --launch-profile http
@@ -161,9 +164,98 @@ No SQLite, horários são armazenados como **INTEGER de ticks UTC**, com convers
 
 `SEM_AGUA_ACUMULADA_OBSERVADA` é uma condição relatada em um instante, não uma declaração de segurança atual. Nenhum dos estados indica que o cidadão pode atravessar o trecho.
 
-## Experimentar as requisições
+## Formas de reprodução para o professor
 
-Use [AguaNaRua.http](AguaNaRua.http) no REST Client do VS Code (data dinâmica e extração do ID) ou execute este exemplo completo em PowerShell com a API aberta:
+| Forma | O que demonstra | Ferramenta |
+|---|---|---|
+| A. Swagger no navegador | Contrato, schemas, respostas e execução de GET/POST | Navegador e API |
+| B. Menu interativo no terminal | Consulta dos três estados, histórico paginado e registro guiado de observações | API no primeiro terminal e Console no segundo |
+| C. Requisições HTTP | Requisições reproduzíveis, corpo JSON e consulta do relato criado | Arquivo `.http` ou PowerShell |
+
+As três formas usam o **SDK .NET 10.0.200**, internet no primeiro restore e a mesma API local. Não é necessário instalar um servidor SQLite. Abra o terminal na raiz do repositório e execute esta preparação comum (comandos válidos em PowerShell ou bash):
+
+```sh
+dotnet tool restore
+dotnet restore AguaNaRua.sln --locked-mode
+dotnet build AguaNaRua.sln --no-restore
+dotnet ef database update --project src/AguaNaRua.Api
+dotnet run --project src/AguaNaRua.Api --no-launch-profile -- --seed
+```
+
+O banco padrão fica em `src/AguaNaRua.Api/agua-na-rua.db`. O seed só preenche um banco sem pontos. Para obter novamente os três estados com horários relativos ao dia da avaliação, siga [Banco e demonstração](#banco-e-demonstração) e escolha outro arquivo antes da preparação. Não é necessário apagar bancos existentes.
+
+### A. Swagger no navegador
+
+Após a preparação comum, inicie a API e mantenha esse terminal aberto:
+
+```sh
+dotnet run --project src/AguaNaRua.Api --launch-profile http
+```
+
+Abra **http://localhost:5080/swagger/index.html**. Em cada operação, clique em **Try it out** e depois **Execute**:
+
+1. `GET /api/pontos`: retorna os pontos. No banco demonstrativo novo, aparecem `RECENTE`, `DESATUALIZADA` e `SEM_OBSERVACAO`.
+2. `GET /api/pontos/{id}`, com `id=3`: retorna `ultimaObservacao=null`, indicando ausência de informação. Consulte também `id=1` para ver data, origem e condição.
+3. Para `POST /api/pontos/{id}/observacoes`, com `id=1`, gere um corpo com horário recente no **PowerShell** e cole o JSON produzido no Swagger:
+
+```powershell
+@{
+    condicao = 'AGUA_ACUMULADA'
+    observadoEm = [DateTimeOffset]::UtcNow.AddMinutes(-1).ToString('o')
+} | ConvertTo-Json
+```
+
+O POST retorna **201** e `Location`; consulte o endereço retornado para obter o relato pelo seu ID. Para testar validação, envie `condicao: "INVALIDA"` e veja **400**. Consulte um ponto inexistente, como `999999`, para obter **404**. As datas dos exemplos visuais do Swagger são estáticas; o comando acima gera uma data recente para o dia da avaliação. Encerre a API com `Ctrl+C` no terminal.
+
+### B. Menu interativo no terminal
+
+Use os mesmos pré-requisitos e a preparação comum. No **primeiro terminal**, execute a API:
+
+```sh
+dotnet run --project src/AguaNaRua.Api --launch-profile http
+```
+
+No **segundo terminal**, também na raiz do repositório:
+
+```sh
+dotnet run --project src/AguaNaRua.Console
+```
+
+Os dois processos devem permanecer em execução durante o uso. O Console usa `HttpClient`, sem ler ou gravar diretamente o banco. O menu oferece:
+
+```text
+Água na Rua
+
+1. Listar pontos monitorados
+2. Consultar detalhes de um ponto
+3. Consultar histórico de observações
+4. Registrar uma observação
+0. Sair
+```
+
+A opção 1 mostra identificação, bairro, indicação de demonstração, estado e última observação. A opção 2 inclui coordenadas; experimente o ponto 3 para visualizar ausência de observação. Na opção 3, o histórico usa páginas de **5 relatos**: `N` avança, `A` volta e `0` retorna ao menu. Sem histórico, o Console informa ausência de informação e retorna ao menu. Cada operação concluída volta ao menu principal.
+
+Na opção 4, escolha a condição em um menu numerado e informe **Agora (UTC)** ou um instante ISO 8601 com segundos e `Z`/offset explícito. A entrada manual mantém o instante informado; a transmissão e a exibição usam UTC, identificado por `Z (UTC)`. Um horário sem fuso é recusado pelo Console; um horário futuro é enviado à API, que devolve o erro de validação. `origem` e `registradoEm` sempre vêm do servidor.
+
+Pontos fictícios são marcados como demonstração. Relatos do seed mostram `DEMONSTRACAO`; os enviados pelo Console usam o endpoint público e recebem `RELATO_CIDADAO`, mesmo em um ponto demonstrativo. Recência é o estado recebido da API, com janela padrão de 24h; o Console não recalcula essa regra nem interpreta ausência de registros como passagem livre.
+
+O endereço padrão é `http://localhost:5080`. Para outra API, informe uma URL absoluta HTTP/HTTPS, sem credenciais, query ou fragmento:
+
+```sh
+dotnet run --project src/AguaNaRua.Console -- --api-url http://localhost:5082
+```
+
+O endereço informado deve corresponder à API em execução. Há timeout HTTP de **10 segundos**, sem repetição automática de requisições. Erros 400/404 e mensagens `ProblemDetails` são apresentados no terminal; falhas de conexão, timeout e respostas incompatíveis retornam ao menu. Digite `0` no menu principal para sair. `Ctrl+C` cancela e encerra o Console; fim da entrada padrão também encerra normalmente. Depois, use `Ctrl+C` no primeiro terminal para parar a API. Para ver os argumentos:
+
+```sh
+dotnet run --project src/AguaNaRua.Console -- --help
+```
+
+### C. Requisições HTTP
+
+Após a preparação comum, mantenha a API em execução com `dotnet run --project src/AguaNaRua.Api --launch-profile http`. Abra [AguaNaRua.http](AguaNaRua.http) no VS Code com a extensão **REST Client**. Clique em **Send Request** acima do bloco desejado. Execute o bloco `criarObservacao` antes do GET que usa o ID retornado. A variável `{{$datetime iso8601 -1 m}}` gera o horário de um minuto atrás a cada execução. Para outra porta, ajuste `@baseUrl` no início do arquivo.
+
+Também é possível executar este exemplo completo no **PowerShell**. Ele usa somente os dois campos aceitos e uma data dinâmica:
 
 ```powershell
 $base = 'http://localhost:5080'
@@ -178,9 +270,40 @@ Invoke-RestMethod "$base/api/pontos/1/observacoes/$($relato.id)"
 Invoke-RestMethod "$base/api/pontos/1/observacoes?page=1&pageSize=20"
 ```
 
+O POST feito por `Invoke-RestMethod` retorna o corpo criado em `$relato`. A requisição seguinte consulta o mesmo ID. O arquivo `.http` e o Swagger permitem inspecionar também os status HTTP e o cabeçalho `Location`. O exemplo pressupõe os IDs do seed em um banco novo.
+
+## Resolver problemas de execução
+
+| Situação | Como resolver |
+|---|---|
+| Porta 5080 ocupada | Use a API que já está aberta ou encerre-a com `Ctrl+C` no terminal correspondente. Outra opção é iniciar em outra porta, como no comando abaixo. |
+| Console informa API indisponível | Confira o endereço exibido e inicie a API no primeiro terminal. Se mudou a porta, passe a mesma URL em `--api-url`. O Console continua no menu para nova operação. |
+| Banco sem dados / lista vazia | Pare a API e execute `dotnet run --project src/AguaNaRua.Api --no-launch-profile -- --seed` com a mesma conexão. Se já existem pontos, o seed não modifica o banco: use outro arquivo para uma demonstração completa. |
+| Timeout ou JSON incompatível | Confira se a URL aponta para esta Web API. O Console informa a falha e retorna ao menu; não repete automaticamente um POST. |
+
+Exemplo de API em outra porta (**PowerShell ou bash**):
+
+```sh
+dotnet run --project src/AguaNaRua.Api --launch-profile http -- --urls http://localhost:5082
+```
+
+Nesse caso, use `--api-url http://localhost:5082` no Console, `http://localhost:5082/swagger/index.html` no navegador e a mesma base nas requisições HTTP. Para desfazer uma conexão definida por variável no **PowerShell**, pare a API e execute `Remove-Item Env:ConnectionStrings__AguaNaRua` no terminal em que ela foi definida.
+| Lista sem pontos | Pare a API e execute `dotnet run --project src/AguaNaRua.Api --no-launch-profile -- --seed`, usando a mesma variável de conexão. Para uma carga nova quando já existem pontos, escolha outro arquivo de banco. |
+| Dados ficaram antigos | O seed não renova relatos existentes. Prepare outro arquivo conforme [Banco e demonstração](#banco-e-demonstração). |
+| Banco sem schema / execução sem perfil | Aplique `dotnet ef database update --project src/AguaNaRua.Api` na mesma conexão. O perfil `http` já aplica migrations em Development. |
+| URL inválida ou JSON incompatível | Use o endereço base da Web API, não o endereço do Swagger. O Console rejeita argumentos inválidos e informa quando o conteúdo recebido não segue o contrato. |
+
+Exemplo de API em outra porta (**PowerShell ou bash**), no primeiro terminal:
+
+```sh
+dotnet run --project src/AguaNaRua.Api --launch-profile http -- --urls http://localhost:5082
+```
+
+No segundo terminal, use o comando do Console com `--api-url http://localhost:5082`; o Swagger estará em `http://localhost:5082/swagger/index.html`. Para requisições PowerShell, altere `$base` para essa URL.
+
 ## Organização e rubrica de C#
 
-Uma solution, um projeto Web API e um projeto xUnit. A separação por pastas mantém a entrega pequena e as responsabilidades explícitas:
+Uma solution, um projeto Web API, um projeto Console e um projeto xUnit. A separação por pastas mantém as responsabilidades explícitas. O Console não referencia o projeto da API; os DTOs do consumidor seguem o contrato HTTP existente. O workflow já executa build e testes da solution inteira, incluindo o novo projeto, sem precisar de alteração:
 
 | Avaliação | Evidência no código |
 |---|---|
@@ -194,9 +317,25 @@ Uma solution, um projeto Web API e um projeto xUnit. A separação por pastas ma
 
 ## Verificações e evidências
 
-**49 testes passaram** no ambiente desta entrega: domínio e serviço com relógio fixo/dependência substituível, integração HTTP com SQLite real em arquivo temporário exclusivo por teste, migrations, FK, persistência reaberta, ordenação/offsets/desempate, paginação, seed idempotente, três estados, ausência de N+1, OpenAPI e casos 400/404.
+Na implementação inicial, em **18/11/2026**, passaram **49 testes** de domínio, serviço e integração da API. Os [registros anteriores](docs/evidencias/README.md) foram preservados. Na alteração do Console, em **19/11/2026**, passaram **83 testes**: os 49 existentes e 34 casos adicionais de configuração, contratos HTTP, erros, timestamps, menu, paginação, encerramento e integração Console → API → SQLite. Restore e build também passaram, com zero avisos e erros. O workflow de CI já compila e testa a solution inteira, incluindo o Console, e não precisou de alteração.
 
-A verificação completa pode ser repetida no Windows (API de verificação usa porta 5081 e banco isolado; encerra o processo que ela própria criou):
+Para repetir build e todos os testes (**PowerShell ou bash**):
+
+```sh
+dotnet restore AguaNaRua.sln --locked-mode
+dotnet build AguaNaRua.sln --no-restore
+dotnet test AguaNaRua.sln --no-build --no-restore
+```
+
+As [novas evidências do Console](docs/evidencias/console/README.md) incluem transcrições reais dos processos, entradas usadas, API com banco isolado, POST seguido de consulta, paginação, erros e API desligada. Para repetir essa verificação no **Windows PowerShell**, sem regravar os arquivos da execução anterior da API:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts/Verificar-Console.ps1
+```
+
+O script usa porta **5082**, banco novo em `tmp/` e grava em `docs/evidencias/console/`. Aceita `-Porta 5083` quando necessário e encerra somente os processos que ele próprio iniciou. Os relatos gerados são fictícios de demonstração. As entradas do menu são fornecidas pela entrada padrão aos processos reais do Console; o script não depende de inspeção visual do terminal.
+
+A verificação anterior da API também pode ser repetida no Windows (porta 5081 e banco isolado; **regrava** os arquivos originais em `docs/evidencias/`):
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File scripts/Verificar-Entrega.ps1

@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="../../src/AguaNaRua.Api/AguaNaRua.Api.csproj" />
+    <ProjectReference Include="../../src/AguaNaRua.Console/AguaNaRua.Console.csproj" />
   </ItemGroup>
 
   <ItemGroup>
